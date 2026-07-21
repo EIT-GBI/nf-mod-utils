@@ -63,11 +63,11 @@ def main():
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open('w', newline='') as csvfile:
-        writer = csv.DictWriter(csvfile, fieldnames=['sample', 'reads', 'reference'])
-        writer.writeheader()
+        writer = csv.writer(csvfile)
+        writer.writerow(['sample', 'reads', 'reference'])
         writer.writerows(rows)
 
     print(f'Wrote {len(rows)} samples to {args.output}')
 
-    if __name__ == '__main__':
-        main()
+if __name__ == '__main__':
+    main()
