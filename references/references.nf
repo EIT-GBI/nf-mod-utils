@@ -8,12 +8,13 @@ def refFasta(meta) {
 // Get the bwa index files for a given sample
 def bwaIndexFor(meta) {
     def fasta = refFasta(meta)
-    tuple(fasta, ['amb', 'ann', 'bwt', 'pac', 'sa'].collect { ext -> file("${fasta}.${ext}", checkIfExists: true) })
+    // toUriString() ensures the file path is correctly formatted as a URI string for a remote reference
+    tuple(fasta, ['amb', 'ann', 'bwt', 'pac', 'sa'].collect { ext -> file("${fasta.toUriString()}.${ext}", checkIfExists: true) })
 }
 
 // Get the samtools faidx file for a given sample
 def faidxFor(meta) {
     def fasta = refFasta(meta)
-    tuple(fasta, file("${fasta}.fai", checkIfExists: true))
+    tuple(fasta, file("${fasta.toUriString()}.fai", checkIfExists: true))
 }
 
